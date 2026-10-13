@@ -1,55 +1,61 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:meu_perfil/screens/catalog_screen.dart';
-import 'package:meu_perfil/screens/preferences.screen.dart';
-import 'package:meu_perfil/screens/register_screen.dart';
+import 'package:meu_perfil/main1.dart';
+import 'package:meu_perfil/screens/aparencia_screen.dart';
 
-// import 'package:meu_perfil/screens/perfil_screen.dart';
-
-//FUNÇÃO MAIN
-// Nossa Função de entrada da aplicação
 void main() {
-  //Onde inicia aplicação flutter
-  //Neste projeto, o primeiro widget será o MyApp.
   runApp(const MyApp());
 }
 
-// WIDGET PRINCIPAL DA APLICAÇÃO
-// Ele extends (herda)  StatelessWidget neste momento, por que  não precisa mudar as informações
-class MyApp extends StatelessWidget {
-  // Construtor  que usamos quando criamos uma instancia dessa classe
-  //key é uma propriedade usada para identificar o widget nna árvore.
+//StatefullWidget permitir escolha de tema
+// alterar o MaterialApp enquanto o app esta aberto
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-  // Informar que o método abaixo já existe, na classe que estamos usando
   @override
-  // Forma que biuldamos o nosso widget
-  Widget build(BuildContext context) {
-    // MaterialApp é a configuração estrutural geral  da aplicação.
-    return MaterialApp(
-      //Remove a faixa de DEBUG.
-      debugShowCheckedModeBanner: false,
-      // Titulo da Aplicação
-      title: 'MeuPerfil',
+  State<MyApp> createState() => _MyAppState();
+}
 
-      // Configuração do thema visual
+class _MyAppState extends State<MyApp> {
+  // sytem usa a preferencia de aparencia do aparelho.
+  ThemeMode modoAtual = ThemeMode.system;
+
+  void alterarTema(ThemeMode novoModo) {
+    setState(() {
+      modoAtual = novoModo;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+
+      // thema  resepresenta a configuração visual clara.
+      //ThemeData  agrupa as configurações visuais
       theme: ThemeData(
-        // colorSheme define o conjunto de cores
-        // fromSeed cia automaticamente um esquema de cores a partir de uma cor base
-        // seeColor é uma cor utilizada como base  para gerar o esquema
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        // colorSheme ele define a paletas de cores
+        // ColorScheme.fromSeed ele gera as paletas apartir de uma cor base
+        colorScheme: ColorScheme.fromSeed(
+          // ele determina a cor principal da paleta
+          seedColor: Colors.indigo,
+          // gera as cores adequadas de acordo com o modo (claro ou escuro)
+          brightness: Brightness.light,
+        ),
       ),
 
-      //Primeira tela ser exibida
-      // home: const PerfilScreen(),
+      // darkTheme represneta a configuração visual escura
+      darkTheme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.indigo,
+          brightness: Brightness.dark,
+        ),
+      ),
 
-      // Nova tela de catalogo
-      // home: const CatalogScreen(),
+      // define qual das duas configurações sera usada
+      themeMode: modoAtual,
 
-      // Nova tela de catalogo
-      // home: const PreferencesScreen(),
-
-      // Nova tela de registro
-      home: const RegisterScreen(),
+      home: AparenciaScreen(modoAtual: modoAtual, aoAlterarTema: alterarTema),
     );
   }
 }
