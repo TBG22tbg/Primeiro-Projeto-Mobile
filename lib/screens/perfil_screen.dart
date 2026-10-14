@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:meu_perfil/screens/catalog_screen.dart';
 import 'package:meu_perfil/widgets/info_cards.dart';
+import 'package:meu_perfil/screens/preferences.screen.dart';
 
 //TELA DE PERFIL
 
@@ -14,6 +16,66 @@ class PerfilScreen extends StatelessWidget {
       //Barra superior da tela
       appBar: AppBar(title: const Text('Meu Perfil'), centerTitle: true),
 
+
+
+      // começamos adicionar as mudanças para o menu
+      // drawer é uma propriedade do Scaffold
+      // Ele rece o Widget que será apresentado, como menu lateral do aplicativo
+      drawer: Drawer(
+        //child define o conteudo interno do drawer
+        child: ListView(
+
+          // remove o espaçamento padrão da ListView
+          // Isso permite que o cabeçalho do menu começe no topo
+          padding: EdgeInsets.zero,
+
+          // children recebe os widgets que serão apresentados no menu
+          children: [
+            // DrawerHeader ele cria a area seuperior do menu
+            const DrawerHeader(
+              child: Text(
+                'Meu perfil',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+            ),
+
+            // ListTile representa uma opção de menu
+            // já tras organizado icones, texto e interação
+            ListTile(
+              // leading recebe o widget que aparece no inicio da opção
+              leading: const Icon(Icons.person),
+              // recebe o conteudo principal da opção
+              title: const Text('Meu prefil'),
+
+              onTap: () {
+                // Como já estamos na tela de perfil, só precisamos fechar o menu
+                Navigator.pop(context);
+              },
+            ),
+
+            ListTile(
+              leading: const Icon(Icons.shopping_bag),
+              title:  const Text('Catálogo'),
+
+              // função executada quando o usuario toca
+              onTap: () {
+                //primeiro fechamos o menu lateral
+                Navigator.pop(context);
+
+                // Depois solicitamos a abertura de uma nova tela
+                Navigator.push(
+                  context,
+                  // MaterialPageRoute cria a rota que será adcionada á navegação
+                  MaterialPageRoute(
+                    // builder
+                    builder: (context) => const CatalogScreen()
+                  )
+                );
+              },
+            )
+          ],
+        ),
+      ),
       // conteudo principal
       // body: const Center(child: Text('Tela de Perfil!')),
       // SingleChildScrollView > Rolagem do scroll
@@ -165,6 +227,23 @@ class PerfilScreen extends StatelessWidget {
                   child: const Text('Editar Perfil'),
                 ),
               ),
+
+              const SizedBox(height: 12),
+
+              SizedBox(
+                width: double.infinity,
+                child:  ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const CatalogScreen(),
+                      ),
+                    );
+                  },
+                  child:  const Text('Ver Catálago'),
+                  ),
+              )
             ],
           ),
         ),

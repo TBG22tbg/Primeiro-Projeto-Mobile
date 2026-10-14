@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:meu_perfil/main1.dart';
 import 'package:meu_perfil/screens/aparencia_screen.dart';
+import 'package:meu_perfil/screens/perfil_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -55,7 +56,8 @@ class _MyAppState extends State<MyApp> {
       // define qual das duas configurações sera usada
       themeMode: modoAtual,
 
-      home: AparenciaScreen(modoAtual: modoAtual, aoAlterarTema: alterarTema),
+      // home: AparenciaScreen(modoAtual: modoAtual, aoAlterarTema: alterarTema),
+      home: const PerfilScreen(),
     );
   }
 }
